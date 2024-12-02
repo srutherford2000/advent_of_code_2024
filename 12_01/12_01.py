@@ -1,17 +1,21 @@
 from argparse import ArgumentParser
 
-def get_columns(file_path):
-
-    col_0 = []
-    col_1 = []
-
+def get_columns(file_path, delimeter=None):
+    #create a dictionary for the columns
+    col_dict = {}
     with open(file_path, "r") as open_file:
         for line in open_file:
-            num_0, num_1 = map(int, line.strip().split())
-            col_0.append(num_0)
-            col_1.append(num_1)
+            #get the row as integers
+            nums = list(map(int, line.strip().split(delimeter)))
 
-    return (col_0, col_1)
+            for i, num in enumerate(nums):
+                #if the column is unseen, create a list
+                if f'col_{i}' not in col_dict:
+                    col_dict[f'col_{i}'] = []
+                #add the number to the right column
+                col_dict[f'col_{i}'].append(num)
+
+    return col_dict
 
 def _12_01_part_1(col_0, col_1):
     col_0.sort()
@@ -31,14 +35,13 @@ def _12_01_part_2(col_0, col_1):
 
     print(f"Part 2: {counts}")
 
-
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_argument("file_path")
+    parser.add_argument("file_path", type=str, help="Path to the input file")
     args = parser.parse_args()
-
-    col0, col1 = get_columns(args.file_path)
-    _12_01_part_1(col0, col1)
-    _12_01_part_2(col0, col1)
+    
+    col_dict = get_columns(args.file_path)
+    _12_01_part_1(col_dict["col_0"], col_dict["col_1"])
+    _12_01_part_2(col_dict["col_0"], col_dict["col_1"])
 
 
