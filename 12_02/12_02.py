@@ -19,14 +19,6 @@ def validate_row(row):
     
     return valid_row
 
-def slice_new_row(row, ind):
-    if 0 == ind:
-        return row[1:]
-    elif len(row)-1 == ind:
-        return row[:-1]
-    else:
-        return row[:ind] + row[ind+1:]
-
 def _12_02_part_1(rows):
     num_safe = 0
     for row in rows:
@@ -39,7 +31,7 @@ def _12_02_part_2(rows):
     for row in rows:
         valid_row = False
         for i in range(len(row)):
-            if validate_row(slice_new_row(row, i)):
+            if validate_row(row[:i] + row[i+1:]):
                 valid_row = True
                 break
         
