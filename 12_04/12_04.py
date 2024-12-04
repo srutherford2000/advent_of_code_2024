@@ -3,12 +3,12 @@ from argparse import ArgumentParser
 UP_DOWN_LEFT_RIGHT = [(-1,0),(1,0),(0,-1),(0,1)]
 DIAGONAL = [(-1,-1),(-1,1),(1,-1),(1,1)]
 
-def get_2D_arr(file_path):
-    arr = []
+def get_rows(file_path):
+    rows = []
     with open(file_path, "r") as open_file:
         for line in open_file:
-            arr.append(list(line.strip()))
-    return arr
+            rows.append(line.strip())
+    return rows
 
 def check_match(arr, i, j, mult_i, mult_j):
     return (0<= i+mult_i*3 < len(arr)) and \
@@ -47,7 +47,7 @@ def _12_04_part1(input_data):
     for i, line in enumerate(input_data):
         for j, letter in enumerate(line):
             if "X" == letter:
-                num_xmas_found += find_mas(arr, i, j)
+                num_xmas_found += find_mas(input_data, i, j)
     
     return num_xmas_found
 
@@ -57,7 +57,7 @@ def _12_04_part2(input_data):
     for i, line in enumerate(input_data):
         for j, letter in enumerate(line):
             if "A" == letter:
-                num_xmas_found += 1 if valid_x(arr, i, j) else 0
+                num_xmas_found += 1 if valid_x(input_data, i, j) else 0
     
     return num_xmas_found
 
@@ -66,8 +66,8 @@ if __name__ == "__main__":
     parser.add_argument("file_path", type=str, help="Path to the input file")
     args = parser.parse_args()
     
-    arr = get_2D_arr(args.file_path)
-    print(f"Part 1: {_12_04_part1(arr)}")
-    print(f"Part 2: {_12_04_part2(arr)}")
+    rows = get_rows(args.file_path)
+    print(f"Part 1: {_12_04_part1(rows)}")
+    print(f"Part 2: {_12_04_part2(rows)}")
 
 
