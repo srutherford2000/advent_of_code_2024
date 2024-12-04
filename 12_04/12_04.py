@@ -10,6 +10,9 @@ def get_rows(file_path):
             rows.append(line.strip())
     return rows
 
+#generalizes function that makes sure MAS are the next in a specific direction
+#mult_i and mult_j should be -1, 0 or 1. And correspond to wether the direction
+#should go up/same y/down or left/same x/or right
 def check_match(arr, i, j, mult_i, mult_j):
     return (0<= i+mult_i*3 < len(arr)) and \
            (0<= j+mult_j*3 < len(arr[0])) and \
@@ -17,6 +20,8 @@ def check_match(arr, i, j, mult_i, mult_j):
            (arr[i + mult_i*2][j + mult_j*2] == "A") and \
            (arr[i + mult_i*3][j + mult_j*3] == "S")
 
+#given an x position (i,j) go ahead and see how many xmas can be spelled in the
+#various positions
 def find_mas(arr, i, j):
     counts = 0
 
@@ -28,13 +33,16 @@ def find_mas(arr, i, j):
 
     return counts
 
-
+#given an a position(i,j) go ahead and verify that the x is comprised of two
+#overlaping "MAS"es
 def valid_x(arr, i, j):
     #the x will need +/- 1 from i and j, so ensure it fits
     if (0 < j < len(arr[i])-1) and (0 < i < len(arr)-1):
 
         vals = [arr[i+a][j+b] for a,b in DIAGONAL]
 
+        #make sure we have the right number of M's and S's and that each 
+        #diagonal has one of each
         if (2 == vals.count("M")) and (2 == vals.count("S")) and \
            (arr[i-1][j-1]!=arr[i+1][j+1]) and (arr[i-1][j+1]!= arr[i+1][j-1]):
             return True
