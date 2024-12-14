@@ -40,17 +40,33 @@ def make_2d_arr(width, height):
         rows.append(["O"]*width)
     return rows
 
+def has_triangle(x,y, end_locs):
+    for j in range(5):
+        for i in range(j-1, j+2):
+            if(x+i, y+j) not in end_locs:
+                return False
+    return True
+
+
 def _12_14_part2(rows, width, height):
-    with open("out.txt", "w") as out_file:
-        for second in range(1000):
-            new_image = Image.new("RGB", (width, height), "white")
-            pixels = new_image.load()
-            for (px,py,vx,vy) in rows:
-                end_x = (px + (second*vx)) % width
-                end_y = (py + (second*vy)) % height
-                pixels[end_x, end_y] = (0,255,0)
+    found_tree = False
+    second = 0
+
+    while not found_tree:
+        second += 1
+        end_locs = set()
+        for (px,py,vx,vy) in rows:
+            end_x = (px + (second*vx)) % width
+            end_y = (py + (second*vy)) % height
+            end_locs.add((end_x, end_y))
+        
+        for(x,y) in end_locs:
+            if(has_triangle(x,y,end_locs)):
+                found_tree = True
+                break
+    
+    return second
            
-            new_image.save(f"image_folder/{second}.png")
 
 if __name__ == "__main__":
     parser = ArgumentParser()
