@@ -34,19 +34,12 @@ def _12_14_part1(rows, width, height):
 
     return prod_of_list(quadrants)
 
-def make_2d_arr(width, height):
-    rows = []
-    for _ in range(height):
-        rows.append(["O"]*width)
-    return rows
-
 def has_triangle(x,y, end_locs):
     for j in range(5):
         for i in range(j-1, j+2):
             if(x+i, y+j) not in end_locs:
                 return False
     return True
-
 
 def _12_14_part2(rows, width, height):
     found_tree = False
