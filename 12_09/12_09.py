@@ -1,5 +1,4 @@
 from argparse import ArgumentParser
-from itertools import combinations
 
 def get_files_and_free_spaces(file_path):
     file_and_space = []
